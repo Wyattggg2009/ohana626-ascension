@@ -2,8 +2,8 @@
  * Do not put any passwords, SQL answer keys or Supabase secret/service_role key here.
  */
 window.OHANA_CONFIG = {
-  url: 'https://ynltkefyfxztgvzeopdq.supabase.co',
-  publishableKey: 'PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE',
+  url: 'https://movdlqmrhlxvvvyakrfm.supabase.co',
+  publishableKey: 'sb_publishable_DaSRQf2RCLK6AoyNM7mcCA_x2MPJI7K',
   playerEmail: 'bella@ohana626.invalid',
   adminEmail: 'wyatt@ohana626.invalid'
 };
