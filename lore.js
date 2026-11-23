@@ -1,32 +1,246 @@
-// Public fictional dossiers; secret answers and finale letters are stored in Supabase.
-export const LORE = [
- {sector:'THE ARRIVAL',icon:'✧',code:'626-A/ORIGIN',color:'#80dafa',signal:'INITIAL HANDSHAKE',brief:'The facility has registered an uninvited investigator. Before anyone trusts the messages arriving through Dispatch, the Federation needs proof that the handler is genuine.',witness:'One word can begin an entire investigation. One hello can begin something much bigger.',logs:[['08:13','A greeting was recorded. The event was initially considered insignificant.'],['08:14','Security marked one identity as trusted. The seal was later copied.'],['09:02','An unauthorized subject known as 626 stole an entire tray of forms.']],objective:'Identify the only genuine order, correct the faulty surveillance clocks, then calculate the maintenance conduit code.',blackbox:'Why would a secure facility keep a record of a greeting? Someone classified it as the first anomaly.',annotation:'The earliest incident reports all contain one unusual line: DO NOT DISCARD PERSONAL CONTEXT.'},
- {sector:'CLASSROOM ZERO',icon:'⌗',code:'FRK-02/PERGREM',color:'#9fd0ff',signal:'DESK ASSIGNMENT',brief:'An ordinary school classroom has appeared inside a restricted Galactic Federation map. Every attempt to remove it from the database makes the record return.',witness:'The classroom was not special because of its walls. The people inside it made it matter.',logs:[['10:01','Franklin High School added to active anomaly registry.'],['10:11','Mr. Pergrem listed as a neutral witness.'],['10:19','Two names emerge in the same historical record.']],objective:'Compare classroom authorization with Dispatch. Follow the corrected surveillance path before the second door yields.',blackbox:'Someone highlighted the first day two people shared the same room, then wrote: KEEP THIS.',annotation:'The classroom was filed under ORIGINS instead of LOCATIONS.'},
- {sector:'THE BALLROOM FILE',icon:'✦',code:'HCM-03/AFTERIMAGE',color:'#ffbdbb',signal:'CAMERA RECONSTRUCTION',brief:'Surveillance found a cluster of genuine photographs mixed among forged event footage. A time sequence points toward Homecoming.',witness:'Sometimes the first time you really go somewhere together becomes a memory you keep carrying.',logs:[['17:50','Entrance surveillance becomes active.'],['18:10','An unregistered smile crosses camera range.'],['19:05','Recovered footage tagged FIRST REAL NIGHT OUT.']],objective:'Separate edited frames from originals using the Lab. Reconstruct the order of the night across the station.',blackbox:'Not a stolen object. A stolen moment—taken out of the archive and placed where someone would find it.',annotation:'All authentic records have a human reason for being saved.'},
- {sector:'OVEREXPOSURE',icon:'☼',code:'LUX-04/INCIDENT',color:'#ffd597',signal:'RADIATION / LIGHT',brief:'A spectacular safety breach fills every security monitor with light. Official reports have become impossible to read without laboratory calibration.',witness:'The most dramatic incidents are occasionally the funniest ones.',logs:[['20:14','Security reports visual interference.'],['20:15','Experiment 626 claims the sun has entered the room.'],['20:16','Witnesses report no injury, only an unforgettable amount of brightness.']],objective:'Use a reference lab wavelength to reject fake frames, then triangulate the real sequence.',blackbox:'The case file is labeled SAFETY VIOLATION. Someone else relabeled it FAVORITE MEMORY.',annotation:'HUMOR is not an approved classification, according to the Federation.'},
- {sector:'THE BLUE FREQUENCY',icon:'◈',code:'BLU-05/SPECTRUM',color:'#6cb6ff',signal:'CHROMATIC INTERCEPT',brief:'A blue signal moves from chamber to chamber without any visible transmitter. It appears whenever the missing artifact is mentioned.',witness:'Not every anomaly is threatening. Some just happen to be someone’s favorite color.',logs:[['06:02','Unidentified blue emission detected.'],['06:05','All other colors fail to match the signatures.'],['06:09','A technician writes: MAYBE IT IS TRYING TO BE FOUND.']],objective:'Trace the blue channel through surveillance; filter decoy batches and recover the spectral access word.',blackbox:'When someone writes the same color in all the margins, it stops looking like a coincidence.',annotation:'The blue signal appears on records that should not be connected.'},
- {sector:'ENERGY ANOMALY',icon:'ϟ',code:'MST-06/BATCH',color:'#b5ee98',signal:'FORMULATION BREACH',brief:'The Laboratory has quarantined a suspicious energy formula. It may be related to the entity’s preferred fuel, or to 626’s shopping list.',witness:'A tiny favorite can say as much about someone as a giant dramatic event.',logs:[['07:15','Energy formulation batch M intercepted.'],['07:20','Experiment 626 requests an unreasonable amount of sugar.'],['07:25','The technician signs off: MONSTER PROTOCOL.']],objective:'Verify real versus counterfeit batches, use reading pairs and the sector route, then open the formula cabinet.',blackbox:'A personal preference should not have a place in a cosmic security investigation. Yet here it is.',annotation:'Not every clue is a clue. Some are just proof that someone pays attention.'},
- {sector:'THE WOLF TRACE',icon:'△',code:'WLF-07/TRACK',color:'#b0cafa',signal:'TRACKING BEACON',brief:'Motion sensors have recorded a recurring wildlife signature that can only be read by correlating security logs with a concealed tracking annex.',witness:'Even an animal someone loves can become a symbol of how you see them.',logs:[['22:01','Four perimeter sectors report matching paw-shaped tracks.'],['22:08','A technician rules out the decoy prints.'],['22:13','The tracking annex reports a handwritten message at the end of the path.']],objective:'Use the classified annex with Dispatch and the Laboratory. Only the correct tracks reach the real door.',blackbox:'A wolf has always known how to find its pack.',annotation:'This record is sealed behind /classified. No one explained why the word FAMILY is scratched nearby.'},
- {sector:'THE SMILE EQUATION',icon:'⌣',code:'SMI-08/IRR',color:'#ffcfaa',signal:'EMOTIONAL RADIANCE',brief:'The Federation tried to assign a numeric value to a smile. Its measurement instruments keep returning readings outside their approved range.',witness:'Some things can be recorded. Others can only be remembered.',logs:[['12:02','Subject displays unexplained positive-emotion effect.'],['12:04','Six separate monitors appear to react.'],['12:05','Final lab report: SOME NUMBERS DO NOT DESCRIBE THIS.']],objective:'Separate authentic readings from counterfeit records; identify the calibrated signature.',blackbox:'What the scientists called an anomaly, the handler once called the best part of his day.',annotation:'The keyword IRREPLACEABLE appears first in this dossier, but is immediately censored.'},
- {sector:'FIRST CONTACT',icon:'“',code:'HLO-09/FIRST',color:'#92e7e0',signal:'AUDIO REASSEMBLY',brief:'A recovered conversation transcript has been separated into mismatched timestamps. One word appears at the exact moment the story begins.',witness:'Sometimes the most important thing anyone says is simply hi.',logs:[['08:12','Hallway noise. No meaningful interaction logged.'],['08:13','A voice says hello. The handler pays attention.'],['08:14','The official record fails to account for a change of heart.']],objective:'Recover the real transmission order and follow the evidence to the security keypad.',blackbox:'The handler later confessed: this was when everything began to change.',annotation:'The original recording was only two seconds long. It was backed up fifteen times.'},
- {sector:'THE ONE WHO STAYED',icon:'⊙',code:'STY-10/ANCHOR',color:'#d8bbff',signal:'TIMELINE INTEGRITY',brief:'Conflicting logs suggest the missing artifact was almost abandoned. A smaller set of trustworthy records tells a completely different story.',witness:'Being chosen when things feel difficult leaves a mark that no security system can quantify.',logs:[['02:00','Low-confidence report: contact is expected to be lost.'],['02:30','Confirmed record: someone is still present.'],['03:30','Confirmed record: the signal did not leave.']],objective:'Eliminate unreliable reports and recover the chronological sequence from verified documents.',blackbox:'Some moments are not about fireworks. They are about someone deciding not to walk away.',annotation:'Archive label changed from REMAINING to STAYED.'},
- {sector:'OHANA PROTOCOL',icon:'∞',code:'OHN-11/ROOT',color:'#f9d59e',signal:'FAMILY CLASSIFICATION',brief:'A confidential classifier has begun merging the words home, belonging, and family. No one in the agency can agree on whether the result is a place, a person, or a promise.',witness:'Family is not always defined by where you started. Sometimes it is who you choose.',logs:[['11:01','Federation requests a standard classification.'],['11:09','Three classification trees disagree.'],['11:11','An analyst writes: SOMEONE ALREADY KNOWS THE ANSWER.']],objective:'Enter the hidden /archive/ohana annex and reconcile classification trees with the verified records.',blackbox:'The missing artifact might never have been a thing.',annotation:'This document names the word OHANA but censors its definition.'},
- {sector:'CIRCLE ECHO',icon:'◎',code:'LKN-12/ORBIT',color:'#ffc68c',signal:'CULTURAL RESONANCE',brief:'Cultural memory scans reveal a world of sunrises, family and return. The footage appears to echo Bella’s favorite movie without borrowing any of its words.',witness:'A story about belonging can feel like it has been written about you.',logs:[['05:58','A golden horizon appears in the viewing chamber.'],['12:00','The facility records a full solar cycle.'],['18:42','The cycle returns the signal to its origin.']],objective:'Compare timestamped cultural echoes, correct the instrument readings and open the orbital archive.',blackbox:'The whole case seems to move in a circle: a hello, a choice, a home.',annotation:'The symbol for the final access key is not a planet. It is a circle.'},
- {sector:'THE OCTOBER FILE',icon:'☾',code:'HLW-13/SHADOW',color:'#f2b7de',signal:'NIGHT VISION',brief:'Halloween surveillance shows contradictory costumes, false timestamps and a missing frame. The real evidence was never entered into the official database.',witness:'A night can become important for reasons that have nothing to do with costumes.',logs:[['19:10','The costume log reports an impossible sighting.'],['19:24','A decoy camera captures a shadow with no source.'],['20:02','Recovered record ends with laughter.']],objective:'Cross-check the costume report and the spectrum readings, then reconstruct the hidden route.',blackbox:'Once again the official investigation captured the event but missed what it meant.',annotation:'The missing frame has a note in the margin: US.'},
- {sector:'THE SECOND INVESTIGATION',icon:'◇',code:'TRI-14/CONVERGE',color:'#c7ffe4',signal:'TRIANGULATION ALERT',brief:'The Unknown Informant reveals that a second investigation has been running beneath the first. Every day’s recovered stamp is now evidence in a larger pattern.',witness:'The closer an investigator comes to the answer, the more familiar the clues become.',logs:[['04:00','Three independent signals converge on the same point.'],['04:07','The Informant orders a review of all recovered evidence.'],['04:09','The handler refuses to identify the target.']],objective:'Reconstruct the cross-case signal, then inspect every stamp on the Investigation Board.',blackbox:'There has never been only one puzzle. The archive is trying to say something.',annotation:'ALTERNATE TARGET CLASSIFICATION: PERSON.'},
- {sector:'THE RETRIEVAL',icon:'✶',code:'FIN-15/REVEAL',color:'#fde0ab',signal:'FINAL AUTHORIZATION',brief:'The retrieval window has arrived. All doors now point toward a vault that no longer seems to be protecting an object.',witness:'Some mysteries are built for a person you love. The greatest surprise is realizing you were always at the center.',logs:[['08:00','Final retrieval order issued.'],['08:01','Every recovered case stamp lights up.'],['08:02','An unsigned message appears: IF YOU FOUND THIS, YOU FOUND THE POINT.']],objective:'Resolve the final three door locks, assemble the fifteen stamps, and open the vault.',blackbox:'RECOVERY STATUS: WAITING FOR THE RIGHT PERSON.',annotation:'The clearance record contains one final word: IRREPLACEABLE.'}
-];
+PROJECT OHANA-626 — WYATT-ONLY PRIVATE SOLUTION GUIDE
+Do not upload this file to a public GitHub repository or give it to Bella.
 
-// Prelude runs in-game, with no email service required. Entries become visible on their date.
-export const PRELUDE = [
- {date:'NOV 20',day:20,title:'INCIDENT REPORT 626-A',code:'SECURITY CLASS 6',body:'At 03:26 Galactic Standard Time, a containment chamber opened without authorization. One classified artifact was removed. Its physical description is missing from every copy of the inventory. The only surviving designation is IRREPLACEABLE. Agent Bunny has been provisionally selected to investigate. This appointment may not be declined by ordinary bureaucratic channels. The Federation apologizes for the inconvenience and requests that all suspicious blue creatures be reported immediately.',clue:'The original inventory entry contains no weight, size or material.'},
- {date:'NOV 21',day:21,title:'SURVEILLANCE UPDATE',code:'INTERCEPT 626-B',body:'Five camera feeds contradict the official incident report. One has an impossible timestamp; another appears to show the camera pointing at itself. An unsigned correction suggests that the clocks are miscalibrated. Your first assignment, when the facility opens, will require you to leave the Security Door and find evidence elsewhere. No camera recording is trustworthy until the Laboratory confirms its offset.',clue:'The camera clocks are inaccurate in different directions.'},
- {date:'NOV 22',day:22,title:'PERSON OF INTEREST: WYATT',code:'REGISTRY CHALLENGE',body:'Personnel has identified a handler called Wyatt. His clearance is high enough to touch classified files, but his name appears beside records that the Federation does not understand. Some analysts suspect that Wyatt knows the investigator personally. Others suspect that he knows too much. No one has found a convincing answer to either accusation.',clue:'A trusted callsign is not the same thing as a trusted message.'},
- {date:'NOV 23',day:23,title:'FRANKLIN HIGH INVESTIGATION',code:'LOCATION ANOMALY',body:'A building on Earth has appeared on the Galactic Federation station blueprint. It is listed as Franklin High School. A classroom associated with Mr. Pergrem appears more often than any military installation. This is highly irregular and, according to the archives, apparently very important.',clue:'Not every location matters because of the place itself.'},
- {date:'NOV 24',day:24,title:'RECOVERED EVIDENCE: HOMECOMING',code:'PHOTOGRAPHIC ANOMALY',body:'Surveillance recovered a set of social-event images from an ordinary night on Earth. The photographs have been labeled evidence despite containing no machinery, stolen equipment or contraband. An analyst left a note: Some nights are the kind you keep. The note was promptly redacted by Security.',clue:'The first real night out may be an important timeline anchor.'},
- {date:'NOV 25',day:25,title:'PUBLIC SAFETY: BRIGHT LIGHTS',code:'VISUAL EXPOSURE',body:'The Federation issues a safety bulletin concerning an extraordinary light event. Witnesses report being unable to see for several moments. Experiment 626 reports that he saw an entirely new star system, which turns out to have been a lamp. The Board has classified the event as a spectacular breach of common sense.',clue:'The funniest things sometimes survive the longest in memory.'},
- {date:'NOV 26',day:26,title:'UNKNOWN BLUE ENTITY',code:'CHROMATIC SECURITY',body:'All recovered transmissions now contain a recurring blue signature. No analyst can explain why it appears alongside other anomalies: a classroom, a dance, a laugh, a bright light. Experiment 626 has been seen wandering near the spectrometer with a can of energy drink. His testimony will not be admitted without independent verification.',clue:'Separate the authentic spectrum from the decoy.'},
- {date:'NOV 27',day:27,title:'ARTIFACT UPDATE',code:'DESCRIPTION UNAVAILABLE',body:'Federation engineers attempted to determine the artifact’s composition. The result was unexpectedly poetic: an effect on morale, a source of comfort, and an unusual capacity to make ordinary days feel brighter. The report has been sealed for containing feelings, which are currently not recognized as a unit of measurement.',clue:'A classification can describe value without describing an object.'},
- {date:'NOV 28',day:28,title:'PRIORITY TRANSMISSION',code:'INFORMANT CONTACT',body:'The Unknown Informant claims that the missing evidence has never left the station. The files are simply scattered among four departments. Every door must be opened by showing that several independent records agree. The Informant adds one impossible instruction: When you start seeing the same person in every clue, do not look away.',clue:'Four departments. Three locks. One trail.'},
- {date:'NOV 29',day:29,title:'EMERGENCY ACTIVATION',code:'FIELD AGENT DEPLOYMENT',body:'Agent Bunny: your temporary clearance has been upgraded to ACTIVE. Beginning tomorrow at 08:00 Eastern, Sector One will open. You are authorized to investigate communications, surveillance, laboratory records, and personnel files. Trust no single document. Recover all fifteen evidence stamps. Above all, remember that an artifact cannot be defined by what a file calls it.',clue:'The QR transit pass below opens the first case when the station activates.'}
-];
+Every day has three sequential locks. The website has all clues; Supabase stores these expected codes.
+
+DAY 01 • Activation & First Contact
+--------------------------------------------------------
+BOLT A: ORBIT
+  Personnel Registry authentic callsign WYATT, level 7.
+  Dispatch matching seal ORBIT; orientation normal.
+BOLT B: EFZU
+  Discard channel SPOOF, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 7422
+  Dispatch approved batch BATCH-53; sector order EAST → SOUTH → WEST → NORTH.
+  Apply the calculation described on the Door C panel to each matching sample.
+
+DAY 02 • Franklin High Anomaly
+--------------------------------------------------------
+BOLT A: ECART
+  Personnel Registry authentic callsign PERGREM, level 4.
+  Dispatch matching seal TRACE; orientation reverse.
+BOLT B: VXHC
+  Discard channel NOISE, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 21682
+  Dispatch approved batch BATCH-70; sector order SOUTH → NORTH → WEST → EAST.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Pergrem classroom seating annex (registry).
+
+DAY 03 • Homecoming Surveillance
+--------------------------------------------------------
+BOLT A: NEXUS
+  Personnel Registry authentic callsign PROM, level 6.
+  Dispatch matching seal NEXUS; orientation normal.
+BOLT B: SVWX
+  Discard channel DARK, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 4610C
+  Dispatch approved batch BATCH-87; sector order SOUTH → WEST → NORTH → EAST.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Homecoming entry-control reel (surveillance).
+
+DAY 04 • Bright Lights Incident
+--------------------------------------------------------
+BOLT A: NEVAR
+  Personnel Registry authentic callsign BEACON, level 8.
+  Dispatch matching seal RAVEN; orientation reverse.
+BOLT B: MQHY
+  Discard channel STATIC, correct camera minutes using Lab offsets,
+  sort remaining glyphs in descending actual time order.
+BOLT C: 1521C
+  Dispatch approved batch BATCH-14; sector order SOUTH → WEST → EAST → NORTH.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Flash incident witness reconstruction (surveillance).
+
+DAY 05 • Unknown Blue Entity
+--------------------------------------------------------
+BOLT A: NWORC
+  Personnel Registry authentic callsign AZURE, level 3.
+  Dispatch matching seal CROWN; orientation reverse.
+BOLT B: SWRJ
+  Discard channel GHOST, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 79007
+  Dispatch approved batch BATCH-31; sector order SOUTH → EAST → WEST → NORTH.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Blue-spectrum subtraction (laboratory).
+
+DAY 06 • Monster Protocol
+--------------------------------------------------------
+BOLT A: SRATS
+  Personnel Registry authentic callsign MONSTER, level 5.
+  Dispatch matching seal STARS; orientation reverse.
+BOLT B: CLQS
+  Discard channel SPOOF, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 82002
+  Dispatch approved batch BATCH-48; sector order NORTH → SOUTH → EAST → WEST.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Approved energy-lot checksum (dispatch).
+
+DAY 07 • Wolf Signature
+--------------------------------------------------------
+BOLT A: NORTH
+  Personnel Registry authentic callsign WOLF, level 9.
+  Dispatch matching seal NORTH; orientation normal.
+BOLT B: CKFX
+  Discard channel NOISE, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 1107R
+  Dispatch approved batch BATCH-65; sector order WEST → NORTH → SOUTH → EAST.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Append track marker from secret /classified annex.
+
+DAY 08 • Smile Vector Analysis
+--------------------------------------------------------
+BOLT A: ATSIV
+  Personnel Registry authentic callsign SMILE, level 6.
+  Dispatch matching seal VISTA; orientation reverse.
+BOLT B: RQJY
+  Discard channel DARK, correct camera minutes using Lab offsets,
+  sort remaining glyphs in descending actual time order.
+BOLT C: 0909B
+  Dispatch approved batch BATCH-82; sector order EAST → WEST → SOUTH → NORTH.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Smile-vector exception table (laboratory).
+
+DAY 09 • First Contact: Hi
+--------------------------------------------------------
+BOLT A: OHCE
+  Personnel Registry authentic callsign HELLO, level 7.
+  Dispatch matching seal ECHO; orientation reverse.
+BOLT B: EQDS
+  Discard channel STATIC, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 2460H
+  Dispatch approved batch BATCH-99; sector order SOUTH → EAST → WEST → NORTH.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: First-contact transcript fragments (surveillance).
+
+DAY 10 • Stayed When It Was Hard
+--------------------------------------------------------
+BOLT A: MSIRP
+  Personnel Registry authentic callsign STAY, level 4.
+  Dispatch matching seal PRISM; orientation reverse.
+BOLT B: UXVT
+  Discard channel GHOST, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 5133Y
+  Dispatch approved batch BATCH-26; sector order SOUTH → NORTH → WEST → EAST.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Retention reliability log (dispatch).
+
+DAY 11 • Family Classification
+--------------------------------------------------------
+BOLT A: SOLAR
+  Personnel Registry authentic callsign OHANA, level 9.
+  Dispatch matching seal SOLAR; orientation normal.
+BOLT B: LMRB
+  Discard channel SPOOF, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 2969F
+  Dispatch approved batch BATCH-43; sector order EAST → NORTH → SOUTH → WEST.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Append status-word initial from secret /archive/ohana annex.
+
+DAY 12 • Lion King Echoes
+--------------------------------------------------------
+BOLT A: TEMOC
+  Personnel Registry authentic callsign LION, level 5.
+  Dispatch matching seal COMET; orientation reverse.
+BOLT B: GZWQ
+  Discard channel NOISE, correct camera minutes using Lab offsets,
+  sort remaining glyphs in descending actual time order.
+BOLT C: 6085D
+  Dispatch approved batch BATCH-60; sector order WEST → EAST → NORTH → SOUTH.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Circle-of-day cultural file (registry).
+
+DAY 13 • Halloween Residue
+--------------------------------------------------------
+BOLT A: TNILG
+  Personnel Registry authentic callsign GHOST, level 7.
+  Dispatch matching seal GLINT; orientation reverse.
+BOLT B: VKPA
+  Discard channel DARK, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 5312G
+  Dispatch approved batch BATCH-77; sector order SOUTH → WEST → EAST → NORTH.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Halloween costume audit (registry).
+
+DAY 14 • Artifact Triangulation
+--------------------------------------------------------
+BOLT A: ERALF
+  Personnel Registry authentic callsign GRID, level 8.
+  Dispatch matching seal FLARE; orientation reverse.
+BOLT B: KLRE
+  Discard channel STATIC, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 662742
+  Dispatch approved batch BATCH-94; sector order SOUTH → NORTH → WEST → EAST.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Supplemental exhibit: Scanner triangulation board (laboratory).
+
+DAY 15 • Final Retrieval Window
+--------------------------------------------------------
+BOLT A: UNION
+  Personnel Registry authentic callsign RECOVERY, level 10.
+  Dispatch matching seal UNION; orientation normal.
+BOLT B: GWCA
+  Discard channel GHOST, correct camera minutes using Lab offsets,
+  sort remaining glyphs in ascending actual time order.
+BOLT C: 845546
+  Dispatch approved batch BATCH-21; sector order SOUTH → EAST → NORTH → WEST.
+  Apply the calculation described on the Door C panel to each matching sample.
+  Append A1Z26 total from earlier stamps at Days 1, 7, 14 (46).
+
+META KEY: OHANAISMYFAMILY
+SECRET FILE 0914-B PASSWORD: family
+
+Note: The real letter and reveal text live in the private Supabase database.
+
+=================================================================
+OPTIONAL BLACK BOX SOLUTIONS — ONE FOR EACH DAY
+=================================================================
+For each day, combine in order:
+  1. LAST DIGIT of the approved Dispatch batch number
+  2. VERIFIED CLEARANCE level from Personnel Registry
+  3. ABSOLUTE VALUE of the camera C1 offset from Laboratory
+All three digits/values are concatenated with no separators.
+This bonus is local-only and does not bypass Supabase door locks.
+
+DAY 01 | Activation & First Contact       | 373   (batch 53, level 7, C1 -3)
+DAY 02 | Franklin High Anomaly            | 045   (batch 70, level 4, C1 -5)
+DAY 03 | Homecoming Surveillance          | 762   (batch 87, level 6, C1 -2)
+DAY 04 | Bright Lights Incident           | 483   (batch 14, level 8, C1 -3)
+DAY 05 | Unknown Blue Entity              | 135   (batch 31, level 3, C1 -5)
+DAY 06 | Monster Protocol                 | 853   (batch 48, level 5, C1 +3)
+DAY 07 | Wolf Signature                   | 594   (batch 65, level 9, C1 +4)
+DAY 08 | Smile Vector Analysis            | 264   (batch 82, level 6, C1 -4)
+DAY 09 | First Contact: Hi                | 975   (batch 99, level 7, C1 +5)
+DAY 10 | Stayed When It Was Hard          | 642   (batch 26, level 4, C1 +2)
+DAY 11 | Family Classification            | 395   (batch 43, level 9, C1 -5)
+DAY 12 | Lion King Echoes                 | 053   (batch 60, level 5, C1 -3)
+DAY 13 | Halloween Residue                | 773   (batch 77, level 7, C1 +3)
+DAY 14 | Artifact Triangulation           | 482   (batch 94, level 8, C1 +2)
+DAY 15 | Final Retrieval Window           | 1102   (batch 21, level 10, C1 -2)
+
+=================================================================
+ADMINISTRATOR REMINDERS
+=================================================================
+1. Login: choose WYATT and use your private Supabase password.
+2. Activate Test Mode ONLY while rehearsing before the event.
+3. Use Mark Complete to test later cases. Actual player puzzle answers stay in Supabase.
+4. The browser-only setup is in START-HERE-BROWSER-ONLY.md.
+5. Never upload THIS answer guide, ALL-IN-ONE SQL or PERSONALIZED-FINALE SQL to public GitHub.
+6. Before launch, reset Bella progress, disable Test Mode, and test on Bella's phone.
+7. Finale vault is locked until all 15 days are done and the release date is reached.
+8. The final key/password for private testing is recorded below.
+   META VAULT PHRASE: OHANAISMYFAMILY
+   SECRET ARCHIVED FILE 0914-B PASSWORD: family
+   The final private letters are stored in Supabase, not in public JavaScript.
+
+All private solutions are for Wyatt only. Enjoy the mystery.
