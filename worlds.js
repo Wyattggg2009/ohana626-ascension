@@ -66,6 +66,14 @@ export function chapterStory(day,record,{director=false}={}){
  const chosen=record.choice;
  return '<section class="world-story"><span class="chapter-eyebrow">'+esc(z.tag)+'</span><h2>'+esc(s.title||c.title)+'</h2><p>'+esc(s.opening)+'</p><div class="world-memory"><span>♡ A LITTLE NOTE FROM WYATT</span><p>'+esc(s.memory)+'</p></div>'+(director?'':'<div class="chapter-choice"><h3>What should Bella do next?</h3><div class="world-choices">'+c.choices.map((v,i)=>'<button type="button" class="world-choice '+(chosen===String.fromCharCode(65+i)?'chosen':'')+'" data-act="world-choice" data-day="'+day+'" data-choice="'+String.fromCharCode(65+i)+'" aria-pressed="'+(chosen===String.fromCharCode(65+i))+'"><span>'+String.fromCharCode(65+i)+'</span> '+esc(v)+'</button>').join('')+'</div><p class="choice-caption">'+(chosen?'♡ Your choice is remembered in the archive.':'Choose your approach. You can change it later.')+'</p></div>')+'</section>';
 }
+export function branchEcho(day,record){
+ const previous=Number(day)-1,choice=record?.previous_choice,prior=chapterFor(previous);
+ if(!prior||!['A','B','C'].includes(choice))return '';
+ const characters=['Stitch','Nala','the Camp Rock crew','the castle keeper','the portal team'];
+ const who=characters[Math.floor((day-1)/4)]||'your friends';
+ const action=prior.choices[choice.charCodeAt(0)-65];
+ return '<section class="choice-echo"><span class="chapter-eyebrow">THE WORLDS REMEMBER YOUR CHOICES</span><p><strong>'+esc(who)+'</strong> remembers that you chose to <em>'+esc(action.toLowerCase())+'</em> in the previous chapter. That decision has brought you to this part of the adventure.</p></section>';
+}
 export function conclusion(day,record){
  if(!record?.chapter)return '';
  return '<div class="world-conclusion"><span class="chapter-eyebrow">CHAPTER MEMORY RECOVERED</span><p>'+esc(record.chapter.closing)+'</p><span class="world-conclusion-icon">'+zoneFor(day).icon+'</span></div>';
