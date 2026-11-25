@@ -1,5 +1,5 @@
 import { MISSIONS } from './season20.js';
-import { ZONES, CHAPTERS, zoneFor, chapterFor, portalMap, worldHero, chapterStory, conclusion, bonusPanel, directorForm, miniPattern } from './worlds.js';
+import { ZONES, CHAPTERS, zoneFor, chapterFor, portalMap, worldHero, chapterStory, branchEcho, conclusion, bonusPanel, directorForm, miniPattern } from './worlds.js';
 import { mountLiveFinale, unmountLiveFinale } from './finale-live.js';
 import { configureLiveShare, renderLiveShare, refreshLiveShare, handleLiveShare, notifyLiveRoute, shutdownLiveShare } from './live-share.js';
 const cfg=window.OHANA_CONFIG||{},root=document.getElementById('app'),N=MISSIONS.length;
@@ -80,7 +80,7 @@ function casePage(day,dir=false){
  const body='<div class="content">'+(dir?'<div class="warning">DIRECTOR READ-ONLY CHAPTER PREVIEW. Bella’s puzzle answers and progress are not changed.</div>':'')
  +'<div class="breadcrumbs"><a href="#/'+(dir?'admin':'worlds')+'">← '+(dir?'DIRECTOR DECK':'MAGICAL WORLD MAP')+'</a><span class="kicker">CHAPTER '+pad(m.id)+' / '+e(m.dateLabel)+'</span></div>'
  +worldHero(day,{director:dir})
- +chapterStory(day,rec,{director:dir})
+ +chapterStory(day,rec,{director:dir})+(!dir?branchEcho(day,rec):'')
  +(rec?.error?'<div class="warning">PRIVATE STORY NOT AVAILABLE: '+e(rec.error)+' — Wyatt needs to install the Supabase Enchanted Multiverse SQL.</div>':'')
  +'<div class="section-title"><span>01 / SEARCH THE LOST ARCHIVE</span><small class="muted">FIVE CLASSIFIED RECORD ROOMS</small></div>'
  +'<section class="sheet"><p>The Eraser scattered coded Federation records through this world. Each department has different clues. Compare them carefully: three genuine answers will release the Story Spark.</p></section>'
