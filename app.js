@@ -2,7 +2,7 @@ import { MISSIONS } from './season20.js';
 import { mountLiveFinale, unmountLiveFinale } from './finale-live.js';
 import { configureLiveShare, renderLiveShare, refreshLiveShare, handleLiveShare, notifyLiveRoute, shutdownLiveShare } from './live-share.js';
 const cfg=window.OHANA_CONFIG||{},root=document.getElementById('app'),N=MISSIONS.length;
-const e=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;':'&quot;',"'":'&#39;'}[c]));
+const e=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pad=n=>String(n).padStart(2,'0');
 const types=[['dispatch','✉','DISPATCH'],['registry','♙','REGISTRY'],['surveillance','◉','SURVEILLANCE'],['laboratory','◇','LABORATORY'],['annex','✦','ANNEX']];
 const typeName=k=>types.find(x=>x[0]===k)?.[2]||k;
