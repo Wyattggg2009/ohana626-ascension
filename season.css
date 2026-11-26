@@ -28,3 +28,10 @@ footer{margin:45px 0 0;text-align:center;font-size:.66rem;color:#98b3c4;letter-s
 @media(max-width:980px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.evidence-menu{grid-template-columns:repeat(3,1fr)}.locks{grid-template-columns:1fr}.director-grid{grid-template-columns:1fr}.top{flex-wrap:wrap}}
 @media(max-width:690px){.shell{padding:10px 12px 72px}.top{gap:8px}.identity img{width:34px;height:34px}.identity{font-size:.78rem}.nav-pill,.tiny{font-size:.61rem;padding:8px}.hero{padding:24px 20px}.hero h1{font-size:clamp(2.5rem,10vw,3.7rem)}.stats{grid-template-columns:repeat(2,1fr);gap:8px}.stat{padding:11px}.stat strong{font-size:1.2rem}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.case{min-height:158px;padding:12px}.case b{font-size:.79rem}.login-wrap{grid-template-columns:1fr;gap:15px;padding:18px}.login-intro h1{font-size:3.3rem}.letter-grid{grid-template-columns:repeat(5,1fr)}.case-header{padding:19px}.evidence-menu{grid-template-columns:repeat(2,1fr)}.sheet{padding:16px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* Easy, touch-friendly, relationship-themed Bolt choices. */
+.bolt-choices{display:grid;gap:9px}
+.bolt-option{display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 12px;background:#13354b;border:1px solid #42758f;border-radius:10px;cursor:pointer;font-size:.82rem;color:#e9f8ff;line-height:1.35}
+.bolt-option:hover,.bolt-option:focus-within{border-color:#79e0e8;background:#194860}
+.bolt-option:has(input:checked){border-color:#80e2ce;background:#20534c;box-shadow:0 0 0 1px #80e2ce66}
+.bolt-option input{flex:0 0 auto;width:18px;height:18px;accent-color:#7ce7ce;margin:0}
