@@ -35,3 +35,10 @@ footer{margin:45px 0 0;text-align:center;font-size:.66rem;color:#98b3c4;letter-s
 .bolt-option:hover,.bolt-option:focus-within{border-color:#79e0e8;background:#194860}
 .bolt-option:has(input:checked){border-color:#80e2ce;background:#20534c;box-shadow:0 0 0 1px #80e2ce66}
 .bolt-option input{flex:0 0 auto;width:18px;height:18px;accent-color:#7ce7ce;margin:0}
+
+/* Director-adjustable Bolt challenge UI (six levels) */
+.bolt-director-panel form{display:grid;gap:11px;margin-top:14px}
+.bolt-director-panel .field{width:100%;max-width:100%}
+.bolt-director-panel .cta{justify-self:start}
+.bolt-level-note{font-size:.78rem;color:#bae4e9;margin:0}
+.bolt-instructions{padding:10px 12px;border-left:3px solid #70d8d1;background:#173f48;border-radius:5px;color:#cff6ed!important;font-size:.79rem!important;line-height:1.6!important;overflow-wrap:anywhere}
