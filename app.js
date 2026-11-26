@@ -1,4 +1,5 @@
 import { MISSIONS } from './season20.js';
+import { initVoicePlayer } from './voice-player.js';
 import { ZONES, CHAPTERS, zoneFor, chapterFor, portalMap, worldHero, chapterStory, branchEcho, conclusion, bonusPanel, directorForm, finalLetterForm, miniPattern } from './worlds.js';
 import { mountLiveFinale, unmountLiveFinale } from './finale-live.js';
 import { configureLiveShare, renderLiveShare, refreshLiveShare, handleLiveShare, notifyLiveRoute, shutdownLiveShare } from './live-share.js';
@@ -137,7 +138,7 @@ function movie(preview){
 }
 function render(){
  if(!snapshot){login();return}
- const p=url();if(p==='/final-transmission')return movie(false);if(p==='/finale-rehearsal')return movie(true);
+ const p=url();const inMovie=(p==='/final-transmission'||p==='/finale-rehearsal');document.body.classList.toggle('ohana-in-movie',inMovie);if(inMovie)window.OHANA_VOICE?.stop();if(p==='/final-transmission')return movie(false);if(p==='/finale-rehearsal')return movie(true);
  movieStarted=false;unmountLiveFinale();
  if(role()==='admin'){
   if(p==='/admin'||p==='/dashboard'||p==='/')return admin();
@@ -156,8 +157,8 @@ function render(){
  if(m)return evidencePage(Number(m[1]),m[2]);go('/dashboard');
 }
 
-async function submit(form){if(form.id==='login-form'){selected=form.elements.agent.value;const email=selected==='admin'?cfg.adminEmail:cfg.playerEmail,password=form.elements.pass.value;if(!email)throw Error('Your existing login email alias is not configured.');const {error}=await client.auth.signInWithPassword({email,password});if(error)throw error;snapshot=await rpc('ohana_state');if(snapshot.role!==selected){await client.auth.signOut();snapshot=null;throw Error('This account does not match the selected role.')}worldCache={};miniSession=null;configureLiveShare(client,url);go(selected==='admin'?'/admin':'/dashboard');render();return}
- if(form.id==='bolt-form'){if(!prepared())throw Error('The 20-day Supabase migration needs to be run first.');const d=Number(form.dataset.day),g=Number(form.dataset.gate),v=form.elements.guess.value;const res=await rpc('ohana_door',{p_day:d,p_gate:g,p_guess:v});alertMsg(res.correct?(res.day_complete?'STORY SPARK '+pad(d)+' RESTORED! ♡':'ARCHIVE SEAL '+g+' RESTORED!'):(['Stitch says: Oopsie! Check the clues again.','Not quite! Simba says to follow the evidence.','The band says: Not the right note! Try again.','That door is being stubborn. Look at the records.','The portal flickers… one more look at the clues!'][Math.floor((d-1)/4)])+' '+(res.attempts?'Attempt '+res.attempts+'.':''),!res.correct);await refresh();return}
+async function submit(form){if(form.id==='login-form'){selected=form.elements.agent.value;const email=selected==='admin'?cfg.adminEmail:cfg.playerEmail,password=form.elements.pass.value;if(!email)throw Error('Your existing login email alias is not configured.');const {error}=await client.auth.signInWithPassword({email,password});if(error)throw error;snapshot=await rpc('ohana_state');if(snapshot.role!==selected){await client.auth.signOut();snapshot=null;throw Error('This account does not match the selected role.')}worldCache={};miniSession=null;configureLiveShare(client,url);go(selected==='admin'?'/admin':'/dashboard');render();window.OHANA_VOICE?.route(url());return}
+ if(form.id==='bolt-form'){if(!prepared())throw Error('The 20-day Supabase migration needs to be run first.');const d=Number(form.dataset.day),g=Number(form.dataset.gate),v=form.elements.guess.value;const res=await rpc('ohana_door',{p_day:d,p_gate:g,p_guess:v});alertMsg(res.correct?(res.day_complete?'STORY SPARK '+pad(d)+' RESTORED! ♡':'ARCHIVE SEAL '+g+' RESTORED!'):(['Stitch says: Oopsie! Check the clues again.','Not quite! Simba says to follow the evidence.','The band says: Not the right note! Try again.','That door is being stubborn. Look at the records.','The portal flickers… one more look at the clues!'][Math.floor((d-1)/4)])+' '+(res.attempts?'Attempt '+res.attempts+'.':''),!res.correct);await refresh();if(role()==='player'){const stem='D'+pad(d)+'_';window.OHANA_VOICE?.playSequence(res.correct?(res.day_complete?[stem+'SEAL_'+g+'_SUCCESS',stem+'COMPLETE',stem+'NEXT']:[stem+'SEAL_'+g+'_SUCCESS',stem+'SEAL_'+(g+1)+'_START']):[stem+'SEAL_WRONG']);}return}
  if(form.id==='final-letter-form'){
   if(role()!=='admin')throw Error('Director permission required.');
   if(!prepared())throw Error('Install the private Supabase upgrade first.');
@@ -188,7 +189,7 @@ async function submit(form){if(form.id==='login-form'){selected=form.elements.ag
  }
  if(form.id==='vault-form'){if(!prepared())throw Error('Supabase migration required.');const res=await rpc('ohana_vault',{p_key:form.elements.key.value});if(!res.ok){alertMsg(res.message||'Incorrect memory phrase.',true);render();return}vaultContent=res.content;snapshot.profile.vault_unlocked=true;alertMsg('VAULT UNSEALED — THE FINAL EVENT IS READY. ♡');render();return}
 }
-async function click(btn){const action=btn.dataset.act;if(action==='logout'){await shutdownLiveShare();await client?.auth.signOut();snapshot=null;worldCache={};miniSession=null;go('/dashboard');login();return}
+async function click(btn){const action=btn.dataset.act;if(action==='logout'){window.OHANA_VOICE?.stop();await shutdownLiveShare();await client?.auth.signOut();snapshot=null;worldCache={};miniSession=null;go('/dashboard');login();return}
  if(action==='movie-begin'){if(role()==='player'&&!vaultContent){const r=await rpc('ohana_vault',{p_key:''});if(r?.ok)vaultContent=r.content;}movieStarted=true;render();return}
  if(action==='edit-story'){const d=Number(document.getElementById('director-day')?.value||1);go('/world-editor/'+d);return}
  if(action==='world-choice'){
@@ -196,20 +197,20 @@ async function click(btn){const action=btn.dataset.act;if(action==='logout'){awa
   const d=Number(btn.dataset.day),choice=btn.dataset.choice;
   await rpc('ohana_world',{p_action:'choose',p_day:d,p_value:choice});
   if(worldCache[d])worldCache[d].choice=choice;
-  alertMsg('♡ YOUR STORY CHOICE IS SAVED.');render();return;
+  alertMsg('♡ YOUR STORY CHOICE IS SAVED.');render();window.OHANA_VOICE?.playClip('D'+pad(d)+'_CHOICE_'+choice);return;
  }
  if(action==='world-spark'){
   if(role()!=='player'||!prepared())throw Error('Unlock this chapter first.');
   const d=Number(btn.dataset.day);
   await rpc('ohana_world',{p_action:'reward',p_day:d,p_value:'spark'});
   if(worldCache[d]&&!worldCache[d].rewards.includes('spark'))worldCache[d].rewards.push('spark');
-  alertMsg('✦ SECRET BONUS STORY SPARK COLLECTED!');render();return;
+  alertMsg('✦ SECRET BONUS STORY SPARK COLLECTED!');render();window.OHANA_VOICE?.playClip('D'+pad(d)+'_BONUS_SPARK');return;
  }
  if(action==='mini-start'){
   if(role()!=='player'||!prepared())throw Error('Unlock this chapter first.');
   const d=Number(btn.dataset.day);
   miniSession={day:d,pattern:miniPattern(d),show:true,index:0};
-  render();
+  render();window.OHANA_VOICE?.playClip('D'+pad(d)+'_MINIGAME_START');
   window.setTimeout(()=>{if(miniSession?.day===d&&miniSession.show){
     miniSession.show=false;
     if(url()==='/case/'+d)render();
@@ -219,22 +220,22 @@ async function click(btn){const action=btn.dataset.act;if(action==='logout'){awa
   if(!miniSession||miniSession.show)throw Error('Start the portal memory challenge first.');
   const d=miniSession.day,g=Number(btn.dataset.symbol);
   if(miniSession.pattern[miniSession.index]!==g){
-   miniSession=null;alertMsg('Stitch mixed up the runes! Try that pattern again. ♡',true);render();return;
+   miniSession=null;alertMsg('Stitch mixed up the runes! Try that pattern again. ♡',true);render();window.OHANA_VOICE?.playClip('D'+pad(d)+'_MINIGAME_FAIL');return;
   }
   miniSession.index++;
   if(miniSession.index===miniSession.pattern.length){
    await rpc('ohana_world',{p_action:'reward',p_day:d,p_value:'mini'});
    if(worldCache[d]&&!worldCache[d].rewards.includes('mini'))worldCache[d].rewards.push('mini');
-   miniSession=null;alertMsg('✦ PORTAL MEMORY CHALLENGE COMPLETE!');render();return;
+   miniSession=null;alertMsg('✦ PORTAL MEMORY CHALLENGE COMPLETE!');render();window.OHANA_VOICE?.playClip('D'+pad(d)+'_MINIGAME_WIN');return;
   }
   render();return;
  }
- if(action==='hint'){if(!prepared())throw Error('Run the new Supabase migration first.');const d=Number(btn.dataset.day),tier=Number(btn.dataset.tier);const res=await rpc('ohana_hint',{p_day:d,p_tier:tier});hintText[d]=(hintText[d]||'')+'\n'+res.hint;alertMsg('HINT DECRYPTED: '+res.hint);await refresh();return}
+ if(action==='hint'){if(!prepared())throw Error('Run the new Supabase migration first.');const d=Number(btn.dataset.day),tier=Number(btn.dataset.tier);const res=await rpc('ohana_hint',{p_day:d,p_tier:tier});hintText[d]=(hintText[d]||'')+'\n'+res.hint;alertMsg('HINT DECRYPTED: '+res.hint);await refresh();window.OHANA_VOICE?.playClip('D'+pad(d)+'_HINT_'+tier);return}
  if(action==='preview'){const d=Number(document.getElementById('director-day')?.value||1);go('/director/'+d);return}
  if(['test-on','test-off','reset','complete'].includes(action)){const explain={ 'test-on':'Enable test mode? This allows Bella to play ahead of schedule.', 'test-off':'Restore the scheduled daily locks?',reset:'Reset Bella’s case progress? This removes her solved cases and cannot be undone.',complete:'Mark the selected case complete for Bella?'};if(!window.confirm(explain[action]))return;const a={'test-on':'test_on','test-off':'test_off',reset:'reset',complete:'complete'}[action];const d=Number(document.getElementById('director-day')?.value||1);await rpc('ohana_admin',{p_action:a,p_day:d});if(a==='reset'){worldCache={};miniSession=null;}alertMsg('DIRECTOR CONTROL UPDATED.');await refresh();return}
 }
 root.addEventListener('submit',async ev=>{const form=ev.target.closest('form');if(!form)return;ev.preventDefault();if(busy)return;busy=true;const submitButton=form.querySelector('[type=submit]');if(submitButton)submitButton.disabled=true;try{await submit(form)}catch(err){console.error(err);if(!snapshot){loginError=err.message||String(err);login()}else{alertMsg(err.message||String(err),true);render()}}finally{busy=false;if(submitButton?.isConnected)submitButton.disabled=false}});
 root.addEventListener('click',async ev=>{const shareBtn=ev.target.closest('[data-share]');if(shareBtn){await handleLiveShare(shareBtn.dataset.share);return}const btn=ev.target.closest('[data-act]');if(!btn||busy)return;busy=true;try{await click(btn)}catch(err){console.warn(err);alertMsg(err.message||String(err),true);render()}finally{busy=false}});
-window.addEventListener('hashchange',()=>{if(snapshot){render();notifyLiveRoute(url());if(role()==='player'&&prepared())rpc('ohana_track',{p_page:url()}).catch(()=>{})}});
-async function boot(){if(!cfg.url||!cfg.publishableKey||!cfg.adminEmail||!cfg.playerEmail){configError('Your existing config.js is missing a valid Supabase URL, publishable key, or login aliases.');return}if(!window.supabase?.createClient){configError('The Supabase browser library did not load.');return}try{client=window.supabase.createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});configureLiveShare(client,url);const {data,error}=await client.auth.getSession();if(error)throw error;if(data?.session)snapshot=await rpc('ohana_state');render()}catch(err){console.error('OHANA startup',err);configError('Supabase connection failed: '+(err.message||err))}}
+window.addEventListener('hashchange',()=>{if(snapshot){render();window.OHANA_VOICE?.route(url());notifyLiveRoute(url());if(role()==='player'&&prepared())rpc('ohana_track',{p_page:url()}).catch(()=>{})}});
+async function boot(){if(!cfg.url||!cfg.publishableKey||!cfg.adminEmail||!cfg.playerEmail){configError('Your existing config.js is missing a valid Supabase URL, publishable key, or login aliases.');return}if(!window.supabase?.createClient){configError('The Supabase browser library did not load.');return}try{client=window.supabase.createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});initVoicePlayer(client,()=>({role:role(),stage,allow,completed:count(),vaultUnlocked:!!profile().vault_unlocked}));configureLiveShare(client,url);const {data,error}=await client.auth.getSession();if(error)throw error;if(data?.session)snapshot=await rpc('ohana_state');render();window.OHANA_VOICE?.route(url())}catch(err){console.error('OHANA startup',err);configError('Supabase connection failed: '+(err.message||err))}}
 boot();
