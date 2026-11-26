@@ -1,0 +1,16 @@
+/* Compact, accessible private narration controls. MP3s stream on demand. */
+.ohana-voice-dock{position:fixed;right:12px;bottom:12px;z-index:1100;background:rgba(7,26,30,.95);color:#e9fff8;border:1px solid rgba(132,235,202,.43);border-radius:16px;padding:10px 12px;width:min(285px,calc(100vw - 24px));box-shadow:0 16px 45px rgba(0,0,0,.4);font:600 12px/1.35 system-ui,sans-serif;backdrop-filter:blur(10px)}
+.ohana-voice-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:850;letter-spacing:.035em}
+.ohana-voice-title small{font-weight:500;color:#b1d9ce;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+.ohana-voice-actions,.ohana-voice-extras{display:flex;gap:6px;margin-top:8px}
+.ohana-voice-dock button{background:#183f40;color:#d8fff1;border:1px solid #41756b;border-radius:9px;padding:7px 9px;min-height:34px;cursor:pointer;font:inherit}
+.ohana-voice-dock button:focus-visible,.ohana-voice-dock input:focus-visible{outline:2px solid #9af8d1;outline-offset:2px}
+.ohana-voice-dock button:hover{background:#245e57}
+.ohana-voice-dock button:disabled{opacity:.35;cursor:not-allowed}
+#ohana-voice-toggle{flex:1;text-align:center}
+#ohana-voice-play,#ohana-voice-replay{min-width:38px;font-size:17px}
+.ohana-voice-volume{display:flex;gap:9px;align-items:center;margin-top:7px;color:#bdd7d0}
+.ohana-voice-volume input{flex:1;accent-color:#87e6b5;width:100%}
+.ohana-voice-extras button{flex:1;font-size:11px}
+body.ohana-in-movie .ohana-voice-dock{display:none}
+@media(max-width:560px){.ohana-voice-dock{right:8px;bottom:8px;width:min(235px,calc(100vw - 16px));padding:8px 9px;font-size:11px}.ohana-voice-dock button{padding:6px 7px;min-height:32px}.ohana-voice-title small{max-width:103px}}
