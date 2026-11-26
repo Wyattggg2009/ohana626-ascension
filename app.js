@@ -1,5 +1,5 @@
 import { MISSIONS } from './season20.js';
-import { ZONES, CHAPTERS, zoneFor, chapterFor, portalMap, worldHero, chapterStory, branchEcho, conclusion, bonusPanel, directorForm, miniPattern } from './worlds.js';
+import { ZONES, CHAPTERS, zoneFor, chapterFor, portalMap, worldHero, chapterStory, branchEcho, conclusion, bonusPanel, directorForm, finalLetterForm, miniPattern } from './worlds.js';
 import { mountLiveFinale, unmountLiveFinale } from './finale-live.js';
 import { configureLiveShare, renderLiveShare, refreshLiveShare, handleLiveShare, notifyLiveRoute, shutdownLiveShare } from './live-share.js';
 const cfg=window.OHANA_CONFIG||{},root=document.getElementById('app'),N=MISSIONS.length;
@@ -122,7 +122,7 @@ function worldEditor(day){
  +'<div class="world-quick-links">'+ZONES.map(z=>'<a class="secondary" href="#/world-editor/'+z.start+'">'+z.icon+' '+e(z.short)+'</a>').join('')+'</div>'
  +'<div class="sheet"><label class="field-label">EDIT A DAY</label><select id="director-day" class="field">'+MISSIONS.map(m=>'<option value="'+m.id+'" '+(day===m.id?'selected':'')+'>'+pad(m.id)+' / '+e(chapterFor(m.id).title)+'</option>').join('')+'</select><button class="secondary" data-act="edit-story">LOAD SELECTED CHAPTER</button></div>'
  +(rec?.error?'<div class="warning">STORY EXTENSION REQUIRED: '+e(rec.error)+'</div>':'')
- +directorForm(day,rec)+'</div>');
+ +directorForm(day,rec)+finalLetterForm(day,rec)+'</div>');
  loadWorld(day);
 }
 
@@ -133,7 +133,7 @@ function movie(preview){
   root.innerHTML='<section class="movie-prelude"><div><span class="chapter-eyebrow">DECEMBER 14 / A MOVIE MADE FOR BELLA</span><span class="movie-icon">🌌</span><h1>THE LAST<br><span class="accent">STORY SPARK.</span></h1><p>Twenty adventures. Five worlds. One story worth saving. Stitch, Simba, Nala, and all the worlds are waiting. Wyatt made this final chapter for Bella. ♡</p><div class="hero-actions" style="justify-content:center"><button class="cta" data-act="movie-begin">▶ BEGIN THE INTERACTIVE MOVIE</button><a class="secondary" href="#/'+(preview?'admin':'vault')+'">← BACK</a></div></div></section>';return;
  }
  root.innerHTML='';
- mountLiveFinale(root,{adminPreview:preview,onExit:()=>{movieStarted=false;go(preview?'/admin':'/vault')}});
+ mountLiveFinale(root,{adminPreview:preview,secretContent:preview?{letter:worldCache[20]?.final_letter||''}:vaultContent,onExit:()=>{movieStarted=false;go(preview?'/admin':'/vault')}});
 }
 function render(){
  if(!snapshot){login();return}
@@ -158,6 +158,15 @@ function render(){
 
 async function submit(form){if(form.id==='login-form'){selected=form.elements.agent.value;const email=selected==='admin'?cfg.adminEmail:cfg.playerEmail,password=form.elements.pass.value;if(!email)throw Error('Your existing login email alias is not configured.');const {error}=await client.auth.signInWithPassword({email,password});if(error)throw error;snapshot=await rpc('ohana_state');if(snapshot.role!==selected){await client.auth.signOut();snapshot=null;throw Error('This account does not match the selected role.')}worldCache={};miniSession=null;configureLiveShare(client,url);go(selected==='admin'?'/admin':'/dashboard');render();return}
  if(form.id==='bolt-form'){if(!prepared())throw Error('The 20-day Supabase migration needs to be run first.');const d=Number(form.dataset.day),g=Number(form.dataset.gate),v=form.elements.guess.value;const res=await rpc('ohana_door',{p_day:d,p_gate:g,p_guess:v});alertMsg(res.correct?(res.day_complete?'STORY SPARK '+pad(d)+' RESTORED! ♡':'ARCHIVE SEAL '+g+' RESTORED!'):(['Stitch says: Oopsie! Check the clues again.','Not quite! Simba says to follow the evidence.','The band says: Not the right note! Try again.','That door is being stubborn. Look at the records.','The portal flickers… one more look at the clues!'][Math.floor((d-1)/4)])+' '+(res.attempts?'Attempt '+res.attempts+'.':''),!res.correct);await refresh();return}
+ if(form.id==='final-letter-form'){
+  if(role()!=='admin')throw Error('Director permission required.');
+  if(!prepared())throw Error('Install the private Supabase upgrade first.');
+  const value=form.elements.letter.value.trim();
+  if(value.length<5)throw Error('Please enter a real letter before saving.');
+  await rpc('ohana_world',{p_action:'save_letter',p_day:20,p_value:value});
+  delete worldCache[20];await loadWorld(20);
+  alertMsg('♡ PRIVATE FINAL MOVIE LETTER SAVED.');render();return;
+ }
  if(form.id==='director-note-form'){
   if(role()!=='admin')throw Error('Director permission required.');
   await rpc('ohana_admin',{p_action:'note',p_message:form.elements.message.value});
@@ -180,7 +189,7 @@ async function submit(form){if(form.id==='login-form'){selected=form.elements.ag
  if(form.id==='vault-form'){if(!prepared())throw Error('Supabase migration required.');const res=await rpc('ohana_vault',{p_key:form.elements.key.value});if(!res.ok){alertMsg(res.message||'Incorrect memory phrase.',true);render();return}vaultContent=res.content;snapshot.profile.vault_unlocked=true;alertMsg('VAULT UNSEALED — THE FINAL EVENT IS READY. ♡');render();return}
 }
 async function click(btn){const action=btn.dataset.act;if(action==='logout'){await shutdownLiveShare();await client?.auth.signOut();snapshot=null;worldCache={};miniSession=null;go('/dashboard');login();return}
- if(action==='movie-begin'){movieStarted=true;render();return}
+ if(action==='movie-begin'){if(role()==='player'&&!vaultContent){const r=await rpc('ohana_vault',{p_key:''});if(r?.ok)vaultContent=r.content;}movieStarted=true;render();return}
  if(action==='edit-story'){const d=Number(document.getElementById('director-day')?.value||1);go('/world-editor/'+d);return}
  if(action==='world-choice'){
   if(role()!=='player'||!prepared())throw Error('Player story access requires the private Supabase migration.');
