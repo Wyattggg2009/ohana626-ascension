@@ -88,6 +88,10 @@ export function directorForm(day,record){
  const c=chapterFor(day),s=record?.chapter;
  return '<section class="director-editor"><div class="chapter-eyebrow">PRIVATE / WYATT ONLY</div><h2>Story editor — Day '+day+'</h2><p>These entries are stored in Supabase, not in public GitHub. Bella sees them only after this chapter unlocks.</p><form id="world-editor-form" data-day="'+day+'"><label>Chapter title<input class="field" name="title" maxlength="300" required value="'+esc(s?.title||c.title)+'"></label><label>Opening story<textarea class="field" name="opening" maxlength="3000" rows="5" required>'+esc(s?.opening||'')+'</textarea></label><label>Personal note from Wyatt<textarea class="field" name="memory" maxlength="3000" rows="4" required>'+esc(s?.memory||'')+'</textarea></label><label>Chapter ending<textarea class="field" name="closing" maxlength="3000" rows="4" required>'+esc(s?.closing||'')+'</textarea></label><button class="cta" type="submit" '+(!s?'disabled':'')+'>SAVE FOUR FIELDS TO SUPABASE ↗</button></form></section>';
 }
+export function finalLetterForm(day,record){
+ if(day!==20)return '';
+ return '<section class="director-editor"><div class="chapter-eyebrow">PRIVATE / FINALE SURPRISE</div><h2>The actual letter in Bella’s movie</h2><p>This letter stays in the private Supabase vault. The finale will read it after Bella unlocks the twenty-letter phrase. Edit this before December 14.</p><form id="final-letter-form"><label>Wyatt’s final message to Bella<textarea class="field" name="letter" maxlength="6000" rows="9" required placeholder="Hi Bella…">'+esc(record?.final_letter||'')+'</textarea></label><button class="cta" type="submit" '+(!record?.chapter?'disabled':'')+'>SAVE PRIVATE FINALE LETTER ♡</button></form></section>';
+}
 export function miniPattern(day){
  const n=Math.min(7,3+Math.floor((day+2)/4)),seed=Number(day)*37+19;
  let x=seed;return Array.from({length:n},()=>{x=(x*13+7)%997;return x%6});
